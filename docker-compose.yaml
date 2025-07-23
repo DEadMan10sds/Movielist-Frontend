@@ -1,6 +1,6 @@
 services:
   movielist:
-    container_name: front
+    container_name: movielist-front
     build:
       context: .
       dockerfile: Dockerfile
