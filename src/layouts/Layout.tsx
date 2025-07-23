@@ -1,16 +1,11 @@
-import { DarkThemeToggle } from "flowbite-react";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import { NavbarCustom } from "../components/NavbarCustom";
 
 export const Layout = () => {
   return (
     <>
-      <nav className="flex w-full items-center justify-between px-5">
-        <Link to="/">
-          <h1>Inicio</h1>
-        </Link>
-        <DarkThemeToggle />
-      </nav>
-      <Outlet></Outlet>
+      <NavbarCustom />
+      <Outlet />
     </>
   );
 };
