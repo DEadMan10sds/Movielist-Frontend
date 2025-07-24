@@ -5,17 +5,19 @@ import Home from "./pages/Home.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Login } from "./pages/SingUp.tsx";
-import { Layout } from "./layouts/Layout.tsx";
 import { Projects } from "./pages/Projects.tsx";
+import { MoviesLoader } from "./loaders/MoviesLoader.ts";
+import { AuthGuard } from "./guards/AuthGuard.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: Layout,
+    Component: AuthGuard,
     children: [
       {
         index: true,
         Component: Home,
+        loader: MoviesLoader,
       },
       {
         path: "projects",
