@@ -3,10 +3,16 @@ import { Layout } from "../layouts/Layout";
 import Cookies from "js-cookie";
 
 export const AuthGuard = () => {
-  const authToken = Cookies.get("auth-token");
   const location = useLocation();
-  console.log(authToken);
-  if (!authToken || authToken === undefined)
+  const authCookies = Cookies.get("authToken");
+
+  if (!authCookies)
+    return <Navigate to="/login" replace state={{ from: location }}></Navigate>;
+
+  const { token } = JSON.parse(authCookies);
+  console.log(token);
+
+  if (!token)
     return <Navigate to="/login" replace state={{ from: location }}></Navigate>;
 
   return <Layout />;
