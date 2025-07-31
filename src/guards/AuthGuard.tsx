@@ -1,16 +1,10 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { Layout } from "../layouts/Layout";
-import Cookies from "js-cookie";
+import { useCookies } from "../hooks/useCookies";
 
 export const AuthGuard = () => {
   const location = useLocation();
-  const authCookies = Cookies.get("authToken");
-
-  if (!authCookies)
-    return <Navigate to="/login" replace state={{ from: location }}></Navigate>;
-
-  const { token } = JSON.parse(authCookies);
-  console.log(token);
+  const { token } = useCookies("auth-token");
 
   if (!token)
     return <Navigate to="/login" replace state={{ from: location }}></Navigate>;

@@ -8,6 +8,7 @@ import { Login } from "./pages/SingUp.tsx";
 import { Projects } from "./pages/Projects.tsx";
 import { MoviesLoader } from "./loaders/MoviesLoader.ts";
 import { AuthGuard } from "./guards/AuthGuard.tsx";
+import { AuthProvider } from "./context/AuthProvider.tsx";
 
 const router = createBrowserRouter([
   {

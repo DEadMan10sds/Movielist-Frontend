@@ -1,8 +1,8 @@
-import { AuthReducerAction } from "../interfaces/AuthAction";
+import { AuthAction } from "../constants/AuthActions";
 import { AuthState } from "../interfaces/AuthState";
 import Cookies from "js-cookie";
 
-export function AuthReducer(state: AuthState, action: AuthReducerAction) {
+export function AuthReducer(state: AuthState, action: AuthAction) {
   switch (action.type) {
     case "LOGIN": {
       const newState = {

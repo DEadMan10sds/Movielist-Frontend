@@ -2,6 +2,7 @@ import { Alert, Button, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FetchAsync } from "../helpers/FetchAsync";
+import { setCookie } from "../hooks/setCookies";
 
 type LoginData = {
   email: string;
@@ -17,8 +18,6 @@ export const LoginForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   const onSubmit: SubmitHandler<LoginData> = async (data) => {
-    console.log(data);
-
     try {
       const response = await FetchAsync(`/auth`, {
         method: "POST",
@@ -28,6 +27,8 @@ export const LoginForm = () => {
         body: JSON.stringify(data),
       });
       console.log(response);
+      setCookie("auth-token", response);
+      //dispatch({ type: "LOGIN", payload: response });
     } catch (error) {
       console.log(error);
       setShowAlert(true);

@@ -1,5 +1,11 @@
-export interface AuthState {
+export type User = {
+  id: number;
+  name: string;
+  role: string;
+};
+
+export type AuthState = {
   isAuthenticated: boolean;
-  user: object | null;
+  user: User | null;
   token: string | null;
-}
+};
