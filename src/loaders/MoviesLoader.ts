@@ -1,5 +1,5 @@
 import { FetchAsync } from "../helpers/FetchAsync";
-import { useCookies } from "../hooks/useCookies";
+//import { useCookies } from "../hooks/useCookies";
 import { MovieInterface } from "../interfaces/Movie";
 import Cookies from "js-cookie";
 
