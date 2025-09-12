@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 
 export async function MoviesLoader(): Promise<MovieInterface | undefined> {
   const cookie = JSON.parse(Cookies.get("auth-token")!);
-
+  console.log(cookie);
   //const cookie = useCookies("auth-token");
   //console.log(cookie);
 
@@ -15,5 +15,8 @@ export async function MoviesLoader(): Promise<MovieInterface | undefined> {
       Authorization: `Bearer ${cookie.token}`,
     },
   });
+
+  console.log(data);
+
   return data;
 }

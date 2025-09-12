@@ -8,7 +8,8 @@ import { Login } from "./pages/SingUp.tsx";
 import { Projects } from "./pages/Projects.tsx";
 import { MoviesLoader } from "./loaders/MoviesLoader.ts";
 import { AuthGuard } from "./guards/AuthGuard.tsx";
-//import { AuthProvider } from "./context/AuthProvider.tsx";
+import { Provider } from "react-redux";
+import { store } from "./store/Store.ts";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
-        loader: MoviesLoader,
+        //loader: MoviesLoader,
       },
       {
         path: "projects",
@@ -34,7 +35,9 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
 );
 

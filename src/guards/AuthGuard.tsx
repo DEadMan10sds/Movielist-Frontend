@@ -1,13 +1,13 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { Layout } from "../layouts/Layout";
-import { useCookies } from "../hooks/useCookies";
+import { useSelector } from "react-redux";
 
 export const AuthGuard = () => {
-  const location = useLocation();
-  const { token } = useCookies("auth-token");
+  const user = useSelector((state) => state.user);
+  console.log("AUTH GUARD ----------------------------------");
+  console.log(user);
 
-  if (!token)
-    return <Navigate to="/login" replace state={{ from: location }}></Navigate>;
+  if (!user) return <Navigate to="/login" replace />;
 
   return <Layout />;
 };
