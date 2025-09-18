@@ -5,7 +5,6 @@ import Home from "./pages/Home.tsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Login } from "./pages/SingUp.tsx";
-import { Projects } from "./pages/Projects.tsx";
 import { AuthGuard } from "./loaders/AuthGuard.ts";
 import { Provider, } from "react-redux";
 import { store } from "./store/Store.ts";
@@ -24,11 +23,7 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
         loader: MoviesLoader,
-      },
-      {
-        path: "projects",
-        element: <Projects />,
-      },
+      }
     ],
   },
   {

@@ -7,7 +7,7 @@ import { useLoading } from "../context/LoadingContext";
 import type { LoginData } from "../types/Login";
 
 
-export const LoginForm = () => {
+export const LoginForm = ({ showRegisterTab }: { showRegisterTab?: () => void }) => {
   const {
     register,
     handleSubmit,
@@ -41,6 +41,8 @@ export const LoginForm = () => {
       <h1 className="light:text-black text-4xl font-bold dark:text-white">
         Bienvenido
       </h1>
+      <p className="dark:text-white">No tienes cuenta? <span className="underline font-semibold hover:text-blue-300 cursor-pointer" onClick={() => showRegisterTab?.()}>Regístrate</span></p>
+
       <div>
         <div className="mb-2 block">
           <Label htmlFor="email">Correo</Label>
