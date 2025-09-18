@@ -13,7 +13,10 @@ const UserReducer = createSlice({
   initialState,
   reducers: {
     setUser: (_state, action) => action.payload,
-    unsetUser: () => initialState,
+    unsetUser: () => {
+      localStorage.removeItem("user");
+      return null as unknown as User;
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -23,5 +26,5 @@ const UserReducer = createSlice({
   },
 });
 
-export const { setUser } = UserReducer.actions;
+export const { setUser, unsetUser } = UserReducer.actions;
 export default UserReducer.reducer;

@@ -6,6 +6,7 @@ import {
   NavbarToggle,
 } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
+import { LogOutButton } from "./LogOutButton";
 
 const links = [
   {
@@ -20,11 +21,13 @@ const links = [
 
 export function NavbarCustom() {
   const url = useLocation().pathname;
+
+
   return (
     <Navbar fluid>
       <NavbarBrand as={Link} href="https://flowbite-react.com">
         <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-          Flowbite React
+          Movie Randomizer
         </span>
       </NavbarBrand>
       <NavbarToggle />
@@ -41,6 +44,7 @@ export function NavbarCustom() {
           );
         })}
         <DarkThemeToggle />
+        <LogOutButton />
       </NavbarCollapse>
     </Navbar>
   );
