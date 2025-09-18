@@ -1,8 +1,9 @@
 import { Alert, Button, Label, TextInput } from "flowbite-react";
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { FetchAsync } from "../helpers/FetchAsync";
-import { setCookie } from "../hooks/setCookies";
+import { useEffect, useState } from "react";
+import { useLoginMutation } from "../api/User";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useLoading } from "../context/LoadingContext";
 
 type LoginData = {
   email: string;
@@ -14,65 +15,62 @@ export const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    resetField,
   } = useForm<LoginData>();
-  const [showAlert, setShowAlert] = useState(false);
+  const navigate = useNavigate()
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+  const { setLoading } = useLoading()
+  const [login, { isLoading }] = useLoginMutation();
 
-  const onSubmit: SubmitHandler<LoginData> = async (data) => {
+  useEffect(() => setLoading(isLoading), [setLoading, isLoading])
+
+  const onSubmit = async (data: LoginData) => {
     try {
-      const response = await FetchAsync(`/auth`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      console.log(response);
-      setCookie("auth-token", response);
-      //dispatch({ type: "LOGIN", payload: response });
+      await login(data).unwrap();
+      navigate("/")
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.log(error);
       setShowAlert(true);
+      resetField("password")
     }
   };
 
-  return (
-    <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex max-w-lg flex-col gap-4"
-      >
-        <h1 className="light:text-black text-4xl font-bold dark:text-white">
-          Bienvenidos
-        </h1>
-        <div>
-          <div className="mb-2 block">
-            <Label htmlFor="email1">Correo</Label>
-          </div>
-          <TextInput
-            id="email1"
-            type="email"
-            placeholder="name@domain.com"
-            required
-            {...register("email")}
-            color={errors.email && "failure"}
-          />
-        </div>
-        <div>
-          <div className="mb-2 block">
-            <Label htmlFor="password1">Contraseña</Label>
-          </div>
-          <TextInput
-            {...register("password")}
-            id="password1"
-            type="password"
-            required
-            color={errors.password && "failure"}
-          />
-        </div>
-        <Button type="submit">Iniciar sesión</Button>
-      </form>
 
-      {showAlert && <Alert color="failure">Error en las credenciales</Alert>}
-    </>
+  return (
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex max-w-lg flex-col gap-4"
+    >
+      <h1 className="light:text-black text-4xl font-bold dark:text-white">
+        Bienvenido
+      </h1>
+      <div>
+        <div className="mb-2 block">
+          <Label htmlFor="email">Correo</Label>
+        </div>
+        <TextInput
+          id="email"
+          type="email"
+          placeholder="name@domain.com"
+          required
+          {...register("email")}
+          color={errors.email && "failure"}
+        />
+      </div>
+      <div>
+        <div className="mb-2 block">
+          <Label htmlFor="password">Contraseña</Label>
+        </div>
+        <TextInput
+          {...register("password")}
+          id="password"
+          type="password"
+          required
+          color={errors.password && "failure"}
+        />
+      </div>
+      <Button type="submit">Iniciar sesión</Button>
+      {showAlert && <Alert withBorderAccent color="failure" onDismiss={() => setShowAlert(false)} additionalContent={<p className="mt-2">Las credenciales no son válidas</p>}>Error</Alert>}
+    </form>
   );
 };

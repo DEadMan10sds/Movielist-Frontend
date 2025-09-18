@@ -6,20 +6,22 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Login } from "./pages/SingUp.tsx";
 import { Projects } from "./pages/Projects.tsx";
-import { MoviesLoader } from "./loaders/MoviesLoader.ts";
-import { AuthGuard } from "./guards/AuthGuard.tsx";
-import { Provider } from "react-redux";
+import { AuthGuard } from "./loaders/AuthGuard.ts";
+import { Provider, } from "react-redux";
 import { store } from "./store/Store.ts";
+import { MoviesLoader } from "./loaders/MoviesLoader.ts";
+import { Layout } from "./layouts/Layout.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: AuthGuard,
+    loader: AuthGuard,
+    Component: Layout,
     children: [
       {
         index: true,
         Component: Home,
-        //loader: MoviesLoader,
+        loader: MoviesLoader,
       },
       {
         path: "projects",

@@ -1,22 +1,13 @@
-import { FetchAsync } from "../helpers/FetchAsync";
-//import { useCookies } from "../hooks/useCookies";
 import { MovieInterface } from "../interfaces/Movie";
-import Cookies from "js-cookie";
+import { store } from "../store/Store";
+import { MoviesApi } from "../api/Movies";
 
-export async function MoviesLoader(): Promise<MovieInterface | undefined> {
-  const cookie = JSON.parse(Cookies.get("auth-token")!);
-  console.log(cookie);
-  //const cookie = useCookies("auth-token");
-  //console.log(cookie);
+export async function MoviesLoader(): Promise<MovieInterface | unknown> {
+  const { data, error } = await store.dispatch(
+    MoviesApi.endpoints.getMovies.initiate(),
+  );
 
-  const data = await FetchAsync<MovieInterface>("/movies", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${cookie.token}`,
-    },
-  });
-
-  console.log(data);
+  if (error) throw new Response("Error loading movies", { status: 500 });
 
   return data;
 }

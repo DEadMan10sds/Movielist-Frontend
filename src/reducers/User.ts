@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { User } from "../types/User";
+import { UserApi } from "../api/User";
 
 const initialState: User | null = null as unknown as User;
 
@@ -8,7 +9,13 @@ const UserReducer = createSlice({
   initialState,
   reducers: {
     setUser: (_state, action) => action.payload,
-    unsetUser: (_state, action) => initialState,
+    unsetUser: () => initialState,
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      UserApi.endpoints.login.matchFulfilled,
+      (_state, { payload }) => payload,
+    );
   },
 });
 
