@@ -2,7 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { User } from "../types/User";
 import { UserApi } from "../api/User";
 
-const initialState: User | null = null as unknown as User;
+const prevUserData = localStorage.getItem("user");
+
+const initialState: User | null = (prevUserData
+  ? JSON.parse(prevUserData)
+  : null) as unknown as User;
 
 const UserReducer = createSlice({
   name: "user",

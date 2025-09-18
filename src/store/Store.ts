@@ -15,4 +15,12 @@ export const store = configureStore({
       .concat(MoviesApi.middleware),
 });
 
+store.subscribe(() => {
+  const userStringified = JSON.stringify(store.getState().user);
+  const prevUser = localStorage.getItem("user");
+
+  if (!prevUser || prevUser !== userStringified)
+    localStorage.setItem("user", userStringified);
+});
+
 export type RootState = ReturnType<typeof store.getState>;
