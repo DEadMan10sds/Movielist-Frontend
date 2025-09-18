@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store/Store";
+import type { CreateMovie } from "../types/Movies";
+import { MovieInterface } from "../interfaces/Movie";
 
 export const MoviesApi = createApi({
   reducerPath: "moviesApi",
@@ -12,12 +14,22 @@ export const MoviesApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Movies"],
   endpoints: (build) => ({
-    getMovies: build.query<unknown, void>({
+    getMovies: build.query<MovieInterface[], void>({
       query: () => "/movies",
+      providesTags: ["Movies"],
+    }),
+    createMovie: build.mutation<unknown, CreateMovie>({
+      query: (body) => ({
+        method: "POST",
+        url: "/movies",
+        body,
+      }),
+      invalidatesTags: ["Movies"],
     }),
   }),
 });
 
-export const { useGetMoviesQuery } = MoviesApi;
+export const { useGetMoviesQuery, useCreateMovieMutation } = MoviesApi;
 export default MoviesApi.reducer;

@@ -11,28 +11,34 @@ import { Provider, } from "react-redux";
 import { store } from "./store/Store.ts";
 import { MoviesLoader } from "./loaders/MoviesLoader.ts";
 import { Layout } from "./layouts/Layout.tsx";
+import { ErrorPage } from "./components/Error.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     loader: AuthGuard,
-    Component: Layout,
+    element: <Layout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        Component: Home,
+        element: <Home />,
         loader: MoviesLoader,
       },
       {
         path: "projects",
-        Component: Projects,
+        element: <Projects />,
       },
     ],
   },
   {
     path: "login",
-    Component: Login,
+    element: <Login />,
   },
+  {
+    path: "*",
+    element: <Login />
+  }
 ]);
 
 createRoot(document.getElementById("root")!).render(

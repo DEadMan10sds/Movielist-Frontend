@@ -1,13 +1,12 @@
-import { useLoaderData } from "react-router-dom";
 import { MovieCard } from "../components/MovieCard";
 import { MovieInterface } from "../interfaces/Movie";
 import { Button, Drawer, DrawerHeader, DrawerItems } from "flowbite-react";
 import { useState } from "react";
 import { CreateMovieForm } from "../components/CreateMovieForm";
+import { useGetMoviesQuery } from "../api/Movies";
 
 export default function Home() {
-  const data = useLoaderData<MovieInterface[]>();
-
+  const { data } = useGetMoviesQuery();
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
   const handleClose = () => setDrawerIsOpen(false);
@@ -18,7 +17,7 @@ export default function Home() {
       <Drawer open={drawerIsOpen} onClose={handleClose}>
         <DrawerHeader title="Crear nueva película" />
         <DrawerItems>
-          <CreateMovieForm />
+          <CreateMovieForm closeDrawer={handleClose} />
         </DrawerItems>
       </Drawer>
       <div className="flex w-full justify-end">
@@ -27,9 +26,11 @@ export default function Home() {
         </Button>
       </div>
       <div className="flex gap-6">
-        {data.map((movie: MovieInterface) => (
-          <MovieCard movie={movie} />
-        ))}
+        {data ? data.map((movie: MovieInterface) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))
+          : <p> No hay películas regitradas </p>
+        }
       </div>
     </div>
   );

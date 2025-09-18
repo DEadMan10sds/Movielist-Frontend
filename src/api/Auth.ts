@@ -6,7 +6,7 @@ interface LoginRequest {
   password: string;
 }
 
-export const UserApi = createApi({
+export const AuthApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_API_URL }),
   endpoints: (builder) => ({
@@ -17,7 +17,7 @@ export const UserApi = createApi({
         body,
       }),
     }),
-    register: builder.mutation<CreateUser, any>({
+    register: builder.mutation<CreateUser, unknown>({
       query: (body) => ({
         method: "POST",
         url: "/users",
@@ -27,4 +27,4 @@ export const UserApi = createApi({
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = UserApi;
+export const { useLoginMutation, useRegisterMutation } = AuthApi;

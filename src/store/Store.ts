@@ -1,17 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import UserReducer from "../reducers/User";
-import { UserApi } from "../api/User";
+import { AuthApi } from "../api/Auth";
 import { MoviesApi } from "../api/Movies";
+import { UnauthorizedError } from "../middleware/Unauthorized";
 
 export const store = configureStore({
   reducer: {
     user: UserReducer,
-    [UserApi.reducerPath]: UserApi.reducer,
+    [AuthApi.reducerPath]: AuthApi.reducer,
     [MoviesApi.reducerPath]: MoviesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(UserApi.middleware)
+      .prepend(UnauthorizedError)
+      .concat(AuthApi.middleware)
       .concat(MoviesApi.middleware),
 });
 

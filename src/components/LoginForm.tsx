@@ -1,14 +1,11 @@
 import { Alert, Button, Label, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { useLoginMutation } from "../api/User";
+import { useLoginMutation } from "../api/Auth";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useLoading } from "../context/LoadingContext";
+import type { LoginData } from "../types/Login";
 
-type LoginData = {
-  email: string;
-  password: string;
-};
 
 export const LoginForm = () => {
   const {

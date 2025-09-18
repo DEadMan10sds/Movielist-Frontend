@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { User } from "../types/User";
-import { UserApi } from "../api/User";
+import { AuthApi } from "../api/Auth";
 
 const prevUserData = localStorage.getItem("user");
 
@@ -20,7 +20,7 @@ const UserReducer = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      UserApi.endpoints.login.matchFulfilled,
+      AuthApi.endpoints.login.matchFulfilled,
       (_state, { payload }) => payload,
     );
   },

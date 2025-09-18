@@ -1,4 +1,4 @@
-import { useRegisterMutation } from "../api/User";
+import { useRegisterMutation } from "../api/Auth";
 import { useForm } from "react-hook-form";
 import { CreateUser } from "../types/User";
 import { useLoading } from "../context/LoadingContext";

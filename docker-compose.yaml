@@ -12,3 +12,4 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
     command: npm run dev
+    restart: always

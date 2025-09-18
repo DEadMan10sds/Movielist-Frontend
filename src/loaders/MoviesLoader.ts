@@ -2,12 +2,14 @@ import { MovieInterface } from "../interfaces/Movie";
 import { store } from "../store/Store";
 import { MoviesApi } from "../api/Movies";
 
-export async function MoviesLoader(): Promise<MovieInterface | unknown> {
-  const { data, error } = await store.dispatch(
-    MoviesApi.endpoints.getMovies.initiate(),
-  );
+export async function MoviesLoader(): Promise<MovieInterface[] | unknown> {
+  const sub = store.dispatch(MoviesApi.endpoints.getMovies.initiate());
+  const { data, error } = await sub;
 
-  if (error) throw new Response("Error loading movies", { status: 500 });
+  if (!error) {
+    sub.unsubscribe();
+    return data ?? [];
+  }
 
-  return data;
+  throw new Response("Error loading movies", { status: 500 });
 }
