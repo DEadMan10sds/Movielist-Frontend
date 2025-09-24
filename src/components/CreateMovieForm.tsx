@@ -19,13 +19,21 @@ export const CreateMovieForm = ({ closeDrawer }: { closeDrawer?: () => void }) =
 
 
   const onSubmit = async (data: CreateMovie) => {
+    const form = new FormData();//Convert to form data to handle image
+
+    Object.keys(data).forEach((item) => {
+      if (item === "file") return;
+      form.append(item, data[item])// TODO: Search good solution for TS error 7053
+    })
+
+    if (data.file?.length) form.append("file", data.file[0]); //Send just a single file
+
     try {
-      await createMovie(data).unwrap();
-      //Revalidar información
-      MoviesApi.util.invalidateTags(["Movies"])
+      await createMovie(form).unwrap();
+      MoviesApi.util.invalidateTags(["Movies"]) //Revalidate Information
       if (closeDrawer) closeDrawer();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.log(error)
       alert.show("create-movie", {
         color: "failure",
         title: "Error",
@@ -39,16 +47,40 @@ export const CreateMovieForm = ({ closeDrawer }: { closeDrawer?: () => void }) =
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="grid grid-rows-2 gap-5">
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="email1">Your email</Label>
+          <Label htmlFor="name">Nombre de la película</Label>
         </div>
         <TextInput
           id="name"
           placeholder="Spiderman"
           required
+          color={errors.name && "failure"}
           {...register("name")}
+        />
+      </div>
+      <div>
+        <div className="mb-2 block">
+          <Label htmlFor="author">Director</Label>
+        </div>
+        <TextInput
+          id="author"
+          placeholder="Jame Gunn"
+          required
+          color={errors.author && "failure"}
+          {...register("author")}
+        />
+      </div>
+      <div>
+        <div className="mb-2 block">
+          <Label htmlFor="image">Imagen</Label>
+        </div>
+        <TextInput
+          id="image"
+          type="file"
+          color={errors.file && "failure"}
+          {...register("file")}
         />
       </div>
       <Button type="submit" className="w-full">Crear</Button>

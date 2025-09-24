@@ -7,7 +7,9 @@ export const Layout = () => {
     <>
       <NavbarCustom />
       <FormWrapper>
-        <Outlet />
+        <div className="p-5">
+          <Outlet />
+        </div>
       </FormWrapper>
     </>
   );

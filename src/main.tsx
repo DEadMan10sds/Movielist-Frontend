@@ -11,6 +11,7 @@ import { store } from "./store/Store.ts";
 import { MoviesLoader } from "./loaders/MoviesLoader.ts";
 import { Layout } from "./layouts/Layout.tsx";
 import { ErrorPage } from "./components/Error.tsx";
+import { ListsPage } from "./pages/Lists.tsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,11 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
         loader: MoviesLoader,
+      },
+      {
+        path: "/lists",
+        element: <ListsPage />,
+        //loader: MoviesLoader,
       }
     ],
   },

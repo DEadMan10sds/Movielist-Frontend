@@ -5,11 +5,12 @@ export function MovieCard({ movie }: { movie: MovieInterface }) {
   const cardProps = {
     className: "max-w-sm",
     imgAlt: `${movie.name} Cover`,
-    ...(movie.image && { imgSrc: movie.image }),
+    imgSrc: movie.image || "https://www.envirochoice.com.au/Images/ProductImages/product-image-1.png"
+    //...(movie.image && { imgSrc: movie.image }),
   };
 
   return (
-    <Card {...cardProps}>
+    <Card {...cardProps} onClick={() => console.log(movie)}>
       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
         {movie.name}
       </h5>

@@ -13,25 +13,25 @@ export default function Home() {
   const handleOpen = () => setDrawerIsOpen(true);
 
   return (
-    <div className="p-5">
+    <>
       <Drawer open={drawerIsOpen} onClose={handleClose}>
         <DrawerHeader title="Crear nueva película" />
         <DrawerItems>
           <CreateMovieForm closeDrawer={handleClose} />
         </DrawerItems>
       </Drawer>
-      <div className="flex w-full justify-end">
+      <div className="flex w-full justify-end mb-5">
         <Button color="green" onClick={handleOpen}>
-          Crear
+          Registrar Película
         </Button>
       </div>
-      <div className="flex gap-6">
+      <div className="grid grid-cols-6 gap-6">
         {data ? data.map((movie: MovieInterface) => (
           <MovieCard key={movie.id} movie={movie} />
         ))
           : <p> No hay películas regitradas </p>
         }
       </div>
-    </div>
+    </>
   );
 }

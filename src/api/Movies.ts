@@ -20,7 +20,7 @@ export const MoviesApi = createApi({
       query: () => "/movies",
       providesTags: ["Movies"],
     }),
-    createMovie: build.mutation<unknown, CreateMovie>({
+    createMovie: build.mutation<unknown, FormData | CreateMovie>({
       query: (body) => ({
         method: "POST",
         url: "/movies",

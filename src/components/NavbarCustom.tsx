@@ -16,6 +16,10 @@ const links = [
     path: "/",
     text: "Inicio",
     element: <HomeIcon />
+  },
+  {
+    path: "/lists",
+    text: "Listas",
   }
 ];
 
